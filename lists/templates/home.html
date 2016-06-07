@@ -1,21 +1,5 @@
-<html>
-    <head>
-        <title>To-Do lists</title>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <style>
-            body {
-                margin: 1em;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Start a new To-Do list</h1>
-        <form method="POST" action="/lists/new">
-            <p style="text-align:center">
-                <input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
-            </p>
-            {% csrf_token %}
-        </form>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block header_text %}Start a new To-Do list{% endblock %}
+
+{% block form_action %}/lists/new{% endblock %}

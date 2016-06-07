@@ -1,24 +1,13 @@
-<html>
-    <head>
-        <title>To-Do lists</title>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <style>
-            body {
-                margin: 1em;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Your To-Do list</h1>
-        <form method="POST" action="/lists/{{ list_id }}/add_items">
-            <input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
-            {% csrf_token %}
-        </form>
-        <table id="id_list_table">
-            {% for item in items %}
-                <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
-            {%  endfor %}
-        </table>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block header_text %}Your To-Do list{% endblock %}
+
+{% block form_action %}/lists/{{ list_id }}/add_item{% endblock %}
+
+{% block table %}
+    <table id="id_list_table" class="table">
+        {% for item in items %}
+            <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+        {%  endfor %}
+    </table>
+{% endblock %}
