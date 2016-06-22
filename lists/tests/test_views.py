@@ -7,11 +7,13 @@ from django.template.loader import render_to_string
 
 from ..views import home_page
 from ..models import Item, List
+from ..forms import ItemForm
 
 
 class HomePageTest(TestCase):
+    maxDiff = None
 
-    def test_rool_url_resolves_to_home_page(self):
+    def test_root_url_resolves_to_home_page(self):
         found = resolve('/')
         self.assertEqual(found.func, home_page)
 
@@ -19,12 +21,20 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         response = home_page(request)
         expected_html = render_to_string('home.html',
+                                         {'form': ItemForm()},
                                          request=request)
-        self.assertEqual(response.content.decode(), expected_html)
+        self.assertMultiLineEqual(response.content.decode(), expected_html)
         self.assertTrue(response.content.startswith(b'<!DOCTYPE html>'))
         self.assertIn(b'<title>To-Do lists</title>', response.content)
         self.assertTrue(response.content.endswith(b'</html>'))
 
+    def test_home_page_renders_home_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
+
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
 class ListViewTest(TestCase):
 
